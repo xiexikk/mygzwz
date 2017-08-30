@@ -1,0 +1,321 @@
+@charset "utf-8";
+body,ol,ul,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,h1,h2,h3,h4,h5,h6{ margin:0; padding:0; font-weight: normal;}
+body{ font:12px "Microsoft YaHei","SimSun","Arial Narrow",HELVETICA;  -webkit-text-size-adjust:100%;color:#666; background-color: #1F1F1F; min-width: 320px;}
+textarea{ resize:none;outline:none;}
+a{ color:#666; text-decoration:none;}
+a:hover{ color:#666; text-decoration:none;}
+a:focus{ text-decoration:none;}
+em{ font-style:normal;}
+li{ list-style:none;}
+img{ display:block; _display:inline; border:0; vertical-align:middle;}
+table{ border-collapse:collapse; border-spacing:0;}
+p{ word-wrap:break-word;}
+input,button{ margin:0; padding:0; outline:none; border: none;}
+
+//base.scss
+$defaultSize:12px !default;
+$base-color: #333 !default;
+$imgUrl:"../images";
+$main-color:#FFD600 !default;
+$white:#fff !default;
+$gray:#e5e5e5 !default;
+$font-weight:700;
+$txt-lineHight:1.2 !default;
+$fl:left !default;
+$fr:right !default;
+$max-width:640px;
+$min-width:320px;
+$baseFontSize: 100px !default;
+@function pxToRem($px) {
+  @return $px / $baseFontSize * 1rem;
+}
+@function remToPx($rem) {
+  @return $baseFontSize * $rem / 1rem;
+}
+%circle{ border-radius: 50%;}
+%ovrd{ overflow: hidden;}
+%m0a{ margin: 0 auto;}
+%widHig{ width: 100%; height: 100%;}
+%ellipsis{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+%pseudo{ content: ""; display: inline-block; vertical-align: middle;}
+%maxWidth{ max-width:$max-width;}
+%clearfix {
+  &:before, &:after { content: ''; display: table; }
+  &:after { clear: both; *zoom: 1; }
+}
+%fixedTop{ position: fixed; left: auto; top: 0; right: auto; bottom: auto; z-index: 88; @extend %maxWidth;}
+%fixedBottom{ position: fixed; left: auto; bottom: 0; right: auto; top: auto; z-index: 88; width: 100%; @extend %maxWidth;}
+@mixin bgPara(){ background-repeat: no-repeat; background-size: cover; }
+@mixin displayFlex(){ display: flex; display: -webkit-box; display: -ms-flexbox; }
+@mixin flex(){ flex:1; -webkit-box-flex:1;  -ms-flex:1; }
+@mixin lineHig($hig){ height: $hig; line-height: $hig;}
+@mixin box-sizing(){ box-sizing: border-box; }
+@mixin ellipsis($v...) {
+  $l: length($v);
+  overflow: hidden; text-overflow: ellipsis;
+  @if ($l == 0) {
+    white-space: nowrap; line-height: $txt-lineHight;
+  } @else if ($l == 1) {
+    display: -webkit-box; -webkit-line-clamp: $v; -webkit-box-orient: vertical;
+  }
+}
+@mixin transition($transition...){
+  transition:$transition;  -webkit-transition:$transition;  -moz-transition:$transition;
+  -ms-transition:$transition; -o-transition:$transition;
+}
+@mixin transform($transform...){
+  transform:$transform;  -webkit-transform:$transform;  -moz-transform:$transform;
+  -ms-transform:$transform;  -o-transform:$transform;
+}
+%translateXY{ position:absolute; left: 50%; top: 50%; @include transform(translate(-50%,-50%)); }
+%translateX{ position:absolute; left: 50%; top: auto; @include transform(translate(-50%,0)); }
+%translateY{ position:absolute; left: auto; top: 50%; @include transform(translate(0,-50%)); }
+@mixin animation($animation...){
+  animation:$animation;  -webkit-animation:$animation;  -moz-animation:$animation;
+  -ms-animation:$animation;  -o-animation:$animation;
+}
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow:$shadow;  -moz-box-shadow:$shadow; box-shadow:$shadow;
+}
+
+@mixin borderB-line($border-B:1px solid #f2f2f2){
+  border-bottom:$border-B;
+}
+@mixin max-screen($res){
+  @media only screen and ( max-width: $res )
+  {
+    @content;
+  }
+}
+@mixin min-screen($res){
+  @media only screen and ( min-width: $res )
+  {
+    @content;
+  }
+}
+
+//index.scss
+.header-top{ width: 100%; height: 80px;  position: relative;
+  .my-nav{ width: 100%; background:#080808 url("#{$imgUrl}/nav-bg.png") repeat-x; border:0;  border-radius:0; position: static;
+    &.fixed-top{ position: fixed; top: 0; z-index: 9999; @include transition(all ease .1s);@include box-shadow(0 2px 3px rgba(255,255,255,.15));}
+    @include min-screen(768px) {
+      &{ min-height: 80px; }
+    }
+    .logo{ width: 160px; height:80px; background-image:url("#{$imgUrl}/logo.png"); @include bgPara();
+      h1{ font-size: 0;}
+      .logo-a{ width: 160px; height: 0; padding-top: 80px; overflow: hidden; display: block; }
+    }
+  }
+  .tm-nav{ @extend %ovrd; display:block;
+    ul{ @extend %ovrd;
+      li{ float: $fl; margin: 0 10px; @include box-sizing();
+        a{ @include lineHig(80px); font-size: 18px; color:$white; display:block;
+          padding-left: 25px; padding-right: 25px; @include transition(all .6s ease 0s);
+          &.active{ background-color:$main-color; color: #331A08; }
+          &:active,&:focus{ background-color: $main-color; color:#331A08; }
+        }
+      }
+    }
+  }
+  .mobile-menu-icon{ cursor: pointer; display: none;
+    .fa{ display: inline-block;  font: normal normal normal 14px/1 FontAwesome;  font-size: inherit;
+      text-rendering: auto;  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
+    .fa-bars:before{ content: "\f0c9";}
+  }
+  @include max-screen(768px) {
+    .mobile-menu-icon{ display: block; color: $main-color; font-size: 30px; background-color: transparent; padding: 6px 15px;
+      position: fixed;top: 15px; right: 15px; z-index: 1000; cursor:pointer; }
+    .tm-nav{ position: fixed; top: 70px; right:15px; z-index: 88; background-color: rgba(15,15,15,.8); opacity: 0; height: 0;
+       @include transition(all 1s ease);
+      &.show{ height: auto; border-radius: 0 0 4px 4px; opacity: 1; }
+      li{ border-bottom: 1px solid #2B2B2B; float: none !important; margin:0!important;
+        &:last-of-type{ border-bottom: none;}
+        a{ height: auto!important; line-height: 1.4!important; padding: 20px 50px 20px!important; display: block;}
+      }
+    }
+  }
+}
+
+
+.my-show{ width:100%; height: 600px; @extend %ovrd;
+  .text{ position: absolute; top: 190px; width: 100%; text-align: center;
+    .wel{ margin-bottom: 30px;  border: 0;
+      h2{ font-family: cursive;  font-weight: 600;  color: #996B4F;  font-size: 70px; }
+    }
+    h3 { font-family: cursive; color:#42251F;  font-size: 36px; font-weight: 100; padding: 0; @include animation(textChg 8s linear infinite);}
+  }
+  .banner{ @extend %widHig; @extend %ovrd; position:relative;
+    .big-img{ height: 100%; }
+    .mask{ @include lineHig(50px); background-color:#000; width:100%; text-align:right; @extend %ovrd;
+      filter:alpha(opacity=70); opacity:0.7; position:absolute; left: 0; bottom:-32px;
+      img{vertical-align:middle; margin-right:10px; display:inline-block; margin-top: 2px; cursor:pointer;
+        &:last-of-type{ margin-right: 40px; }
+        &.show{ margin-bottom:3px; display:inline-block!important; }
+      }
+    }
+  }
+}
+
+@include keyframes(textChg){
+  10%{ color: #42251F; }
+  30%{ color: #422e29; }
+  50%{ color: #693b31; }
+  75%{ color: #855719; }
+  100%{ color: #42291e;}
+}
+
+
+@include max-screen(992px) {
+  .my-show{ height: 500px;
+    .text{ top: 160px;
+      .wel{
+        h2{ font-size: 64px; }
+      }
+      h3 { font-size: 32px; }
+    }
+  }
+}
+@include max-screen(768px) {
+  .myShow{ height: 400px;
+    .text{ top: 130px; }
+    .wel{
+      h2{ font-size: 50px; }
+    }
+    h3{ font-size: 26px; }
+  }
+}
+
+.my-com{ @extend %widHig;
+  .tit{ width: 130px; height: 30px; @include bgPara(); display: block; margin: 0 auto; }
+  .page-header{ margin-top: 0; padding-top:80px; border-bottom: none;
+    @include max-screen(768px) {
+      &{ margin: 20px 0 10px; }
+    }
+  }
+}
+.container{
+  .line{ width: 100%; height: 3px; background: url("#{$imgUrl}/line.png") repeat-x; margin-top: 20px;}
+}
+.my-works{
+  .tit{ background-image: url("#{$imgUrl}/works2.png");}
+  .link{ @extend %ovrd; margin-top: 20px;
+    span{ color:#e6c100; font-size: 20px; float: $fl; position: relative;}
+    ul{ @extend %ovrd; margin-left:100px;
+      li{ margin: 2px 10px; float:$fl;
+        @include max-screen(768px) {
+          &{ display: block; float: none; }
+        }
+        a{ font-size: 18px; color: $white;
+          &:hover{ color: #fdde2f;}
+        }
+      }
+    }
+  }
+  .thumbnail{ padding: 10px 5px; @extend %ovrd; @include transition(all .5s cubic-bezier(0.24, 0.05, 0.19, 1.15));
+    &:hover{ @include box-shadow(0 0 20px $main-color);}
+    a{ display: block;
+      img{ height: auto;}
+    }
+    .caption{ padding: 15px 10px;
+      h3{
+        a{ color: #f40;display: block; margin-bottom: 10px;}
+        @include max-screen(768px){
+          &{ text-align: center;}
+        }
+      }
+      p{ font-size: 13px;}
+    }
+  }
+  .tip{ font-size: 16px; color:  $main-color*1.1; line-height: 30px; margin-left: 15px; margin-bottom: 20px;}
+}
+.my-skills{
+  .tit{ background-image: url("#{$imgUrl}/skills2.png"); }
+  .row{ }
+  .list-ico{ margin-top: 20px;
+    li{ float: left; padding-right: 0;
+      a:hover,a:focus{ background-color: transparent; }
+      img{ display:inline-block;
+        &.chg{ @include transition(ease 1s); @include animation(skill 1.1s linear alternate infinite); }
+        &:hover{ opacity: .8; filter:alpha(opacity=80);}
+      }
+    }
+  }
+  .list-txt{ margin-top: 15px;
+    p{ font-size: 17px; line-height: 33px; color: #fff; cursor: default; @include transition(all 1s);
+      &:hover{ @include transform(scale(1.1,1.1) rotate(-2deg)); color:$main-color;}
+      @include max-screen(1200px){
+        font-size:15px; line-height: 30px;
+      }
+    }
+  }
+}
+@include max-screen(640px){
+  .my-skills .list-ico li{
+    &.col-sm-3{ width: 30%; @include box-sizing();}
+    img{ width: 100%;}
+  }
+
+}
+@keyframes skill{
+  from{ @include transform(scale(1,1)); }
+  to{ @include transform(scale(1.08,1.08)); }
+}
+.my-contact{
+  .tit{ background-image: url("#{$imgUrl}/contact2.png");}
+  .page-header{ border-bottom: none; margin-bottom: 0;}
+  .thumbnail{ width: 100%; background-color: transparent;border: none; }
+  .container{ position: relative;}
+  .dl-resume{ width:100px; height:40px; border-radius:5px; position:absolute; right:10px; bottom:10px; @include box-shadow(0 0 2px rgba(255,255,255,0.8));
+    background:url("#{$imgUrl}/paopao.png") left top, url("#{$imgUrl}/paopao.png") right bottom, -webkit-linear-gradient(top,rgba(187, 157, 1, 1),rgba(251, 227,101, 1));
+    @include transition(all 2s); @include animation(mymm 0.8s linear infinite alternate);
+    &:hover{ background-position:left bottom, right top; }
+    h3{ width:100%; height:auto;
+      a{ font-size:16px; color:#f40; text-shadow:0 0 1px #F2F2F2; line-height:40px; text-align:center; display:block;}
+    }
+  }
+}
+@keyframes mymm{
+  from{ bottom:0px; right:10px;}
+  50%{ @include box-shadow(0 0 3px #F60);}
+  to{ bottom:15px; right:15px;}
+}
+
+.my-foot{ text-align: center; color: #b7b7b7;
+  .list-inline{ line-height: 24px; padding: 10px 0;
+    a{ color: #b7b7b7; margin-left: 4px;
+      &:hover{ color: #FFD600; text-decoration: underline;}
+    }
+  }
+  img{ display: inline-block;}
+}
+.back-top{ position: fixed; bottom:-66px; right: 20px; opacity: 0;
+  &.show{ bottom:20px; opacity: 1; @include transition(bottom .8s ease,opacity .6s ease); }
+  .ii{ width: 46px; height: 46px; background: url("#{$imgUrl}/bakcTop.png") no-repeat left top; background-size: cover;
+    @include box-shadow(0 0 2px $main-color);  display: inline-block; cursor: pointer;
+    &:hover{ background-position: left bottom;}
+  }
+}
+
+
+
+
+
+
+
+
+
+
