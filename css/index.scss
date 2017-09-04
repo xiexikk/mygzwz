@@ -138,7 +138,7 @@ $baseFontSize: 100px !default;
   }
   @include max-screen(768px) {
     .mobile-menu-icon{ display: block; color: $main-color; font-size: 30px; background-color: transparent; padding: 6px 15px;
-      position: fixed;top: 15px; right: 15px; z-index: 1000; cursor:pointer; }
+      position:absolute; top: 15px; right: 15px; z-index: 1000; cursor:pointer; }
     .tm-nav{ position: fixed; top: 70px; right:15px; z-index: 88; background-color: rgba(15,15,15,.8); opacity: 0; height: 0;
        @include transition(all 1s ease);
       &.show{ height: auto; border-radius: 0 0 4px 4px; opacity: 1; }
@@ -190,7 +190,7 @@ $baseFontSize: 100px !default;
   }
 }
 @include max-screen(768px) {
-  .myShow{ height: 400px;
+  .my-show{ height: 300px;
     .text{ top: 130px; }
     .wel{
       h2{ font-size: 50px; }
@@ -203,7 +203,7 @@ $baseFontSize: 100px !default;
   .tit{ width: 130px; height: 30px; @include bgPara(); display: block; margin: 0 auto; }
   .page-header{ margin-top: 0; padding-top:80px; border-bottom: none;
     @include max-screen(768px) {
-      &{ margin: 20px 0 10px; }
+      &{ margin: 20px 0 10px; padding-top: 10px; }
     }
   }
 }

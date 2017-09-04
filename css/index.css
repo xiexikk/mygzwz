@@ -140,7 +140,7 @@ input, button {
       font-size: 30px;
       background-color: transparent;
       padding: 6px 15px;
-      position: fixed;
+      position: absolute;
       top: 15px;
       right: 15px;
       z-index: 1000;
@@ -282,13 +282,13 @@ input, button {
       .my-show .text h3 {
         font-size: 32px; } }
 @media only screen and (max-width: 768px) {
-  .myShow {
-    height: 400px; }
-    .myShow .text {
+  .my-show {
+    height: 300px; }
+    .my-show .text {
       top: 130px; }
-    .myShow .wel h2 {
+    .my-show .wel h2 {
       font-size: 50px; }
-    .myShow h3 {
+    .my-show h3 {
       font-size: 26px; } }
 .my-com .tit {
   width: 130px;
@@ -303,7 +303,8 @@ input, button {
   border-bottom: none; }
   @media only screen and (max-width: 768px) {
     .my-com .page-header {
-      margin: 20px 0 10px; } }
+      margin: 20px 0 10px;
+      padding-top: 10px; } }
 
 .container .line {
   width: 100%;
